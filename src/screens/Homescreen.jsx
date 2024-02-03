@@ -1,118 +1,127 @@
-import { StyleSheet, Text, View,TextInput,TouchableOpacity,Alert, ImageBackground } from 'react-native'
-import { useState } from 'react';
 import React from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
+import { Formik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
-import Welcome from './Welcome';
-import Headers from '../components/Headers/Headers';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import Headers from './Headers';
 
 const Homescreen = () => {
-  const [name, setName]=useState('');
-  const [password, setPassword]=useState('');
   const navigation = useNavigation();
- 
 
-  
   return (
-    
-    <SafeAreaView style={styles.container} >
-    <ImageBackground source={{uri:'https://img.freepik.com/free-vector/futuristic-background-with-lines_23-2148487905.jpg'}} style={{height:"100%",width:"100%"}}>
-    <View style={{alignItems:"center", height:"10%" , top:50}}>
-    <Text style={styles.title}>Sign In Page</Text>
-    <Text style={styles.subtitles}>Enter Your account details to Login</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <Formik
+        initialValues={{ username: '', password: '' }}
+        onSubmit={(values) => {
+          console.log(values);
+          navigation.navigate(Headers);
+        }}
+      >
+        {({ handleChange, handleBlur, handleSubmit, values }) => (
+          <ImageBackground
+            source={{ uri: 'https://img.freepik.com/free-vector/futuristic-background-with-lines_23-2148487905.jpg' }}
+            style={styles.imageBackground}
+          >
+            <View style={styles.headerView}>
+              <Text style={styles.title}>Sign In Page</Text>
+              <Text style={styles.subtitles}>Enter Your account details to Login</Text>
+            </View>
 
-    <View style={{height:"80%", justifyContent:"center",alignItems:"center", width:"100%"}}>
-    <View>
+            <View style={styles.formView}>
+              <TextInput
+                style={styles.inputField}
+                placeholder='Username'
+                onChangeText={handleChange('username')}
+                onBlur={handleBlur('username')}
+                value={values.username}
+              />
+              <TextInput
+                style={styles.inputField}
+                placeholder='Password'
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
+                value={values.password}
+                secureTextEntry
+              />
 
-     <TextInput
-     style={styles.name}
-     placeholder='username'
-     onChangeText={(text)=>setName(text)}
-     value={name}/>
+              <Text style={styles.accountText}>
+                Don't have an account?{' '}
+                <Text style={styles.signupText} onPress={() => navigation.navigate('Welcome')}>
+                  SignUp
+                </Text>
+              </Text>
 
-     <TextInput
-     style={styles.name}
-     placeholder='password'
-     onChangeText={(text)=>setPassword(text)}
-     value={password}
-     secureTextEntry/>
-
-    </View>
-    <Text style={styles.account}>Don't have an account? <Text style={styles.signup} onPress={() =>navigation.navigate(Welcome)}>SignUp</Text></Text>
-    </View>
-    <View>
-    
-
-    <TouchableOpacity
-      style = {styles.btn}>
-      <Text style={styles.btnname} onPress={()=>navigation.navigate(Headers)} >SignIn</Text>
-    </TouchableOpacity>
-
-    </View>  
-
-    </ImageBackground>
- </SafeAreaView>
-  )
-}
-
-export default Homescreen
+              <TouchableOpacity style={styles.signInButton} onPress={handleSubmit}>
+                <Text style={styles.signInButtonText}>SignIn</Text>
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
+        )}
+      </Formik>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+  },
+  imageBackground: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent:"space-evenly"
   },
-  title:{
-    color:"white",
-    justifyContent:"center",
-    fontWeight:"900",
-    textAlign:"center",
-    marginTop:20,
-    fontSize:40,
+  headerView: {
+    alignItems: 'center',
+    marginTop: 50,
   },
-  subtitles:{
-    color:"#F5F5F5",
-    justifyContent:"center",
-    fontWeight:"900",
-    textAlign:"center",
-    marginTop:20,
-    fontSize:20,
+  title: {
+    color: 'white',
+    fontWeight: '900',
+    textAlign: 'center',
+    fontSize: 40,
   },
-  name:{
-    fontSize:20,
-    margin:20,
-    borderRadius:8,
-    borderWidth:2,
-    padding:10,
-    minWidth:"70%",
-    backgroundColor:"white",
+  subtitles: {
+    color: '#F5F5F5',
+    fontWeight: '900',
+    textAlign: 'center',
+    fontSize: 20,
+    marginTop: 20,
   },
-  btn:{
-    minWidth:"80%",
-    alignSelf:"center",
-    backgroundColor:"black",
-    borderRadius:8,
-    padding:8,
-    
+  formView: {
+    top:"20%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   },
-  btnname:{
-    color:"white",
-    textAlign:"center",
+  inputField: {
+    fontSize: 20,
+    margin: 20,
+    borderRadius: 8,
+    borderWidth: 2,
+    padding: 10,
+    minWidth: '70%',
+    backgroundColor: 'white',
   },
-  account:{
-    fontSize:16,
-    color:"#F5F5F5",
-    alignSelf:"center",
-    marginTop:20,
+  accountText: {
+    fontSize: 16,
+    color: '#F5F5F5',
+    marginTop: 20,
   },
-  signup:{
-    fontSize:18,
-    fontWeight:"700",
-    color:"lightblue",
-    
-  }
-})
+  signupText: {
+    fontWeight: '700',
+    color: 'lightblue',
+  },
+  signInButton: {
+    top:"70%",
+    minWidth: '80%',
+    backgroundColor: 'black',
+    borderRadius: 8,
+    padding: 10,
+  },
+  signInButtonText: {
+    color: 'white',
+    textAlign: 'center',
+  },
+});
+
+export default Homescreen;

@@ -1,17 +1,28 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,TouchableOpacity } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-import CourseTemp from '../navigation/CourseTemp';
-import ExtraCourses from '../navigation/ExtraCourses';
+import CourseTemp from '../components/navigation/CourseTemp';
+import ExtraCourses from '../components/navigation/ExtraCourses';
+import { useState } from 'react';
 
 const Headers = () => {
+    const [backgroundColor, setBackgroundColor] = useState('white');
+  
+    const changeColor = () => {
+      setBackgroundColor(prevColor => prevColor === 'white' ? '#b6becf' : 'white');
+    };
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor }]}>
       <View style={styles.header}>
-        <AntDesign name="arrowleft" size={24} color="white" style={styles.headIcon} />
-        <Entypo name="dots-three-horizontal" size={24} color="white" style={styles.headIcon} />
+        <TouchableOpacity>
+            <AntDesign name="arrowleft" size={24} color="white" style={styles.headIcon} />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={changeColor}>
+            <Entypo name="dots-three-horizontal" size={24} color="white" style={styles.headIcon} />
+        </TouchableOpacity>
       </View>
       
       <View style={styles.courseSection}>

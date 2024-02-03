@@ -15,7 +15,7 @@ const CourseTemp = () => {
       data={data2}
       horizontal
       showsHorizontalScrollIndicator={false}
-      renderItem={({item})=><TouchableOpacity style={styles.imageConatiner}  showsVerticalScrollIndicator={false} onPress={()=> navigation.navigate("DetailHead")}>
+      renderItem={({item})=><TouchableOpacity style={styles.imageConatiner}  showsVerticalScrollIndicator={false} onPress={()=> navigation.navigate("Detail")}>
       <Image source={{uri : item.Image}} style={styles.image}  />
       <Text style={{alignSelf:"center", fontWeight:"600",}}>{item.title}</Text>
       
