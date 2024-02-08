@@ -1,15 +1,19 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, FlatList } from 'react-native';
 import React from 'react';
 import { list } from '../../data/Datain';
+import {useNavigation} from '@react-navigation/native';
 
 const ExtraCourses = () => {
+  const navigation =useNavigation();
   return (
     <View style={styles.container}>
       <FlatList
         data={list}
         renderItem={({item}) => (
-          <TouchableOpacity style={styles.Extracontainer}>
-            <Image source={{ uri: item.image }} style={styles.image} />
+          <TouchableOpacity style={styles.Extracontainer} onPress={()=>navigation.navigate("Detail" , {
+            item : item
+          })}>
+            <Image source={{ uri: item.Image }} style={styles.image} />
             <View style={styles.textContainer}>
               <Text style={styles.title}>{item.title}{'\n\n'}</Text>
               <Text style={styles.subtitle}>TotalItem: {item.totalItem}</Text>

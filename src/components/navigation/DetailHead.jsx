@@ -4,12 +4,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { UserType } from '../../Context/UserContext';
 
-const DetailHead = () => {
+const DetailHead = ({item}) => {
   const navigation=useNavigation();
   return (
     <SafeAreaView style={styles.container}>
-        <ImageBackground source={{uri:'https://miro.medium.com/v2/resize:fit:1024/0*uO_vEPnGxheGScdI.jpg'}} style={styles.image}>
+        <ImageBackground source={{uri: item.Image}} style={styles.image}>
 
         <View style={styles.header}>
         <TouchableOpacity onPress={()=>navigation.navigate(Headers)}>
@@ -20,7 +21,7 @@ const DetailHead = () => {
 
         </ImageBackground>
         <View style={styles.title}>
-        <Text style={styles.txt}>DSA</Text>
+        <Text style={styles.txt}>{item.title}</Text>
         <Entypo name="star" size={30} color="gold" style={styles.Icon} />
         </View>
     </SafeAreaView>

@@ -3,7 +3,6 @@ import { StyleSheet, Text, View,ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Welcome from './src/screens/Welcome';
 import StackNavigation from "./src/components/navigation/StackNavigation"
-import Test from './src/screens/Test';
 import CourseTemp from './src/components/navigation/CourseTemp';
 import Homescreen from './src/screens/Homescreen';
 import { UserContext } from './src/Context/UserContext';
@@ -14,7 +13,7 @@ export default function App() {
   return (
   <UserContext>
     <StackNavigation/>
-    <StatusBar style='dark' />
+  
   </UserContext>
   );
 }

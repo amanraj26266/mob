@@ -7,15 +7,26 @@ import { Fontisto } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Formik } from 'formik';
 
 const Welcome = () => {
   const [name,setName]=useState('');
   const [email,setEmail]=useState('');
   const [dob,setDob]=useState('');
   const [mobile,setMobile]=useState('');
+  const [password,setPassword]=useState('');
   const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.container}>
+       <Formik
+       initialValues={{name:'',email:'',dob:'',mobile:'',password:''}}
+       onSubmit={(values)=>{
+        console.log(values);
+        navigation.navigate(Headers);
+       }}
+       >
+    {({ handleChange, handleBlur, handleSubmit, values }) =>(
     <ImageBackground source={{uri:'https://wallpaperaccess.com/full/1075090.jpg'}} style={{height:"100%",width:"100%"}}>
     <View style={{alignItems:"center", height:"10%" , top:50}}>
       <Text style={styles.heading}>SignUp Page</Text>
@@ -27,8 +38,9 @@ const Welcome = () => {
         <TextInput
         style={styles.input}
         placeholder='UserName'
-        onChangeText={(text)=>setName(text)}
-        value={name}/>
+        onChangeText={handleChange('name')}
+        onBlur={handleBlur('name')}
+        value={values.name}/>
       </View>
 
       <View style={styles.textinput}>
@@ -36,8 +48,10 @@ const Welcome = () => {
         <TextInput
         style={styles.input}
         placeholder='Email'
-        onChangeText={(text)=>setEmail(text)}
-        value={email}/>
+        onChangeText={handleChange('email')}
+        onBlur={handleBlur('email')}
+        value={values.email}
+        keyboardType='email-address'/>
       </View>
 
 
@@ -46,8 +60,9 @@ const Welcome = () => {
         <TextInput
         style={styles.input}
         placeholder='Date Of Birth'
-        onChangeText={(text)=>setDob(text)}
-        value={dob}/>
+        onChangeText={handleChange('dob')}
+        onBlur={handleBlur('dob')}
+        value={values.dob}/>
       </View>
 
       <View style={styles.textinput}>
@@ -55,16 +70,34 @@ const Welcome = () => {
         <TextInput
         style={styles.input}
         placeholder='Mobile No.'
-        onChangeText={(text)=>setMobile(text)}
-        value={mobile}/>
+        onChangeText={handleChange('mobile')}
+        onBlur={handleBlur('mobile')}
+        value={values.mobile}
+        keyboardType='numeric'/>
+        
       </View>
+
+      <View style={styles.textinput}>
+        <MaterialIcons name="password" size={24} color="black" />
+        <TextInput
+        style={styles.input}
+        placeholder='Password'
+        onChangeText={handleChange('password')}
+        onBlur={handleBlur('password')}
+        value={values.password}
+        secureTextEntry/>
+      </View>
+
+      
       <Text style={{fontSize :18 , color : "#F5F5F5"}}>Already have an account ? <Text style={{color : 'lightblue'}} onPress={()=>navigation.navigate(Homescreen)}>Sign In</Text></Text>
     </View>
 
-    <TouchableOpacity style={styles.btn} onPress={()=>navigation.navigate("Headers")} >
+    <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
       <Text style={{color : "white" , fontSize : 20 , alignSelf:"center"}} >SignUp</Text>
     </TouchableOpacity>
     </ImageBackground>
+    )}
+    </Formik>
     </SafeAreaView>
   )
 }

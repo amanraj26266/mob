@@ -1,9 +1,12 @@
 import { ScrollView, StyleSheet, Text, View,TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import CourseEnrolled from './CourseEnrolled';
 
 
 const DetailContent = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
        <ScrollView showsVerticalScrollIndicator={false}>
@@ -11,7 +14,7 @@ const DetailContent = () => {
 
        </ScrollView>
        <View >
-        <TouchableOpacity onPress={()=>navigation.navigate(Homescreen)} style={styles.bottom}>
+        <TouchableOpacity onPress={()=>navigation.navigate(CourseEnrolled)} style={styles.bottom}>
           <Text style={styles.btntxt}>Enroll Now </Text>
         </TouchableOpacity>
       </View>
